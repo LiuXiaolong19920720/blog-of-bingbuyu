@@ -18,48 +18,50 @@
                         {% endif %}                          
                     </div>
             -->     
+            <!--
                     <div class="logo">
                         <a href="/">
                             <img class="ui logo" src="{% static 'images/cvpy-green-logo.png' %}">
                         </a>
                     </div>  
-            <!--        
+            -->        
                     <div class="name-label">
-                        <a href="/" class="ui label" style="margin-top:0px;">
-                            <h1>BingBuyu</h1> 
+                        <a href="/" class="ui label" style="margin-left:80px;">
+                            <h1>冰不语</h1> 
                         </a>
                     </div>
-            -->        
-                    <div class="menu">
+                    
+                    <div class="menu" style="margin-left:60px;">
                         <a class="active item" href="/">
-                            Home
+                            <h4>首页</h4>
+                        </a>                       
+  
+                        <a class="item" style="margin-left:60px;">
+                            <h4>关于我</h4>
+                        </a> 
+                                              
+                        {% if user.is_authenticated %}                                         
+                            <a class="item" style="margin-left:60px;">
+                                <h4>Messages</h4>
+                            </a>
+                        {% endif %}                         
+
+                        <a class="item" style="margin-right:0px;">
+                            <div class="ui action input">
+                                <input type="text" placeholder="Search...">
+                                <div class="ui teal button">Search</div>
+                            </div>
                         </a>
-                        <a class="item">
-                            Messages
-                        </a>
-                        <a class="item">
-                            Friends
-                        </a>  
-                    </div>                        
+                    </div>  
                 </div>
             </div>           
             
-            <div class="ui one column doubling stackable grid container">
-                <div class="column">
-            <div class="content container">
-                <div class="row">
-                    <div class="col-md-8">
-                    {% block content %}
-                    {% endblock %}
-                    </div>
-                </div>
-            </div>
-                </div>
-                <div class="column">
-                    <p></p>
-                    <p></p>
-                </div>
-            </div>
+
+            {% block content %}
+            {% endblock %}                                
+
+            
+          
             
 
         </body>

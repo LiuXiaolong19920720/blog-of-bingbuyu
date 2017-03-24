@@ -3,9 +3,12 @@
 {% block content %}
 
 <style>
+
     .post{
-        width: 70%;
+    line-height:2;
+    width:100%;
     }
+
 </style>
 
 <script>            
@@ -19,28 +22,27 @@
                 $('.like_count_blog').html(data);
             });
         });
+        
+        $('.ui.sticky')
+            .sticky({
+                context: '#img',
+                pushing: true
+  })
+;
     });
 </script> 
 
 <div class="ui container stackable grid">
-
-    <div class="twelve wide column">
-    
+    <div class="twelve wide column">   
         <div class="ui raised very padded container segment">
-            <div class="ui header">
-                <a href="{% url 'post_detail' pk=post.pk %}">
-                    <h2>{{ post.title }}</h2>
-                </a>
-            </div>
-            <br/>
-            {% if post.published_date %}
-            <!--
-                <div class="date">
-                
-                
-                    <strong>{{ post.published_date|date:"Y-m-d H:i"}}</strong> by <strong>{{post.author}}</strong>  <a class="btn" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                -->    
-                    
+            <div class="post">  
+                <div class="ui header" style="margin-top:0px;">
+                    <a href="{% url 'post_detail' pk=post.pk %}">
+                        <h2>{{ post.title }}</h2>
+                    </a>
+                </div>
+                <br/>
+                {% if post.published_date %}                    
                     <div class="date-author" style="float:left;">
                         <div class="ui Teal label">时间
                             <div class="detail">{{ post.published_date|date:"Y-m-d"}}</div>
@@ -50,7 +52,7 @@
                             <div class="detail">{{post.author}}</div>
                         </div>
                     </div>
-                    
+        
                     <div class="count" style="float:right">
                         <div class="ui Teal label">阅读
                             <div class="detail">{{post.click_number}}</div>
@@ -60,8 +62,6 @@
                             <div class="detail">{{post.comment_number}}</div>
                         </div>
 
- 
-          
                         <div class="ui teal label post-likes" id="heart-icon" data-post-id="{{ post.id }}">
                             <i class="tiny red like icon" id="heart-icon"></i>
                             <i class="like_count_blog" id="heart-counter">{{ post.likes }}</i>
@@ -71,72 +71,66 @@
                             
                             {% endif %}
                         </div>
-   
-                        
+                      
                         {% if user.is_authenticated %}                                      
                             <a href ="{% url 'post_edit' pk=post.pk %}">
                                 <button class="small teal ui icon right floated label">
                                 <i class="write icon"></i>
                             </a>
-                        {% else %}
-                        
+                        {% else %}                        
                         {% endif %}
-                    </div> 
+                    </div>                             
+                {% endif %}
+                <br/>
+                <div class="ui clearing divider"></div>
+                <br /> 
+                <p>{{ post.text|linebreaksbr }}</p>            
+                <br />
+            
+                <div class="likes">
+                    <button class="tiny ui teal button post-likes" id="heart-icon" data-post-id="{{ post.id }}">
+                        <i class="red like icon" id="heart-icon"></i>
+                        <i class="like_count_blog" id="heart-counter">{{ post.likes }}</i>
+                        {% if liked %}               
+                        {% else %}                                
+                        {% endif %}
+                    </button> 
+                </div>
+
+                <div class="share-to" style="float:right;">     
+                    <button class="tiny ui teal right labeled icon button">
+                        <i class="share icon"></i>
+                            分享到
+                    </button>
+                
+                    <button class="tiny ui circular Green wechat icon button">
+                        <i class="wechat icon"></i>
+                    </button>
                     
-            {% endif %}
-            <br/>
-            <div class="ui clearing divider"></div>
-            <br /> 
-            <p>{{ post.text|linebreaksbr }}</p>            
-            <br />
-            
-            <div class="likes">
-                <button class="tiny ui teal button post-likes" id="heart-icon" data-post-id="{{ post.id }}">
-                    <i class="red like icon" id="heart-icon"></i>
-                    <i class="like_count_blog" id="heart-counter">{{ post.likes }}</i>
-                    {% if liked %}               
-                    {% else %}                                
-                    {% endif %}
-                </button> 
-            </div>
-
-            <div class="share-to" style="float:right;">
-            
-
-                
-                <button class="tiny ui teal right labeled icon button">
-                    <i class="share icon"></i>
-                        分享到
-                </button>
-            
-                <button class="tiny ui circular Green wechat icon button">
-                    <i class="wechat icon"></i>
-                </button>
-                
-                <button class="tiny ui circular Red weibo icon button">
-                    <i class="weibo icon"></i>
-                </button>
-                
-                <button class="tiny ui circular blue qq icon button">
-                    <i class="qq icon"></i>
-                </button>                  
-            </div>         
-           
-            <div class="ui clearing divider"></div>
-                
-            <br/>
-            <div class="page-num">
-                {% include "blog/pagination.html" with page=posts %}
-            </div> 
-            <br/>
+                    <button class="tiny ui circular Red weibo icon button">
+                        <i class="weibo icon"></i>
+                    </button>
+                    
+                    <button class="tiny ui circular blue qq icon button">
+                        <i class="qq icon"></i>
+                    </button>                  
+                </div>         
+               
+                <div class="ui clearing divider"></div>
+                    
+                <br/>
+                <div class="page-num">
+                    {% include "blog/pagination.html" with page=posts %}
+                </div> 
+                <br/>
+            </div>       
         </div>
-        
+     
         <div class="ui raised very padded container segment">        
             <div class="ui comments">
                 <div class="ui top attached tabular menu">
                     <div class="active item">文章评论</div>
                 </div>
-        <!--        <h3 class="ui dividing header">文章评论</h3>    -->
         
                 {% for comment in comments %}
                     <div class="comment">
@@ -177,18 +171,23 @@
                 {{ form|semanticui }}
                 <button class="ui primary submit labeled icon button" type="submit">
                     <i class="icon edit"></i>提交</button>
-            </form>        
-        </div>
-        
+             </form>             
+        </div>                 
     </div>
+    
 
-
-     
+   
     <div class="four wide column">
-	    <div class="ui raised very padded container segment">
-            <p>{{ post.text|linebreaksbr }}</p>  
+        <div class="ui raised segment">
+            <img src="https://images.unsplash.com/photo-1445272885371-027f17af0130?dpr=1&auto=format&fit=crop&w=767&h=431&q=80&cs=tinysrgb&crop=" width="100%" id="img"></img>  
         </div>
-    </div>
+        <div class="ui raised very padded container segment">
+            <img src="https://images.unsplash.com/photo-1476610182048-b716b8518aae?dpr=1&auto=format&fit=crop&w=767&h=464&q=80&cs=tinysrgb&crop=" width="100%" id="img"></img>  
+        </div>
+        <div class="ui raised very padded container segment">
+            <img src="https://images.unsplash.com/photo-1444011283387-7b0f76371f12?dpr=1&auto=format&fit=crop&w=767&h=1006&q=80&cs=tinysrgb&crop=" width="100%" id="img"></img>   
+        </div>   
+    </div>    
 </div>
-          
-{% endblock %}
+        
+{% endblock content %}

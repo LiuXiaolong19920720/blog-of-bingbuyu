@@ -80,7 +80,10 @@ def post_detail(request, pk):
 
     
     # clicks、comments and hearts count
-    post.click_number += 1
+    if request.user.is_authenticated:
+        pass
+    else:
+        post.click_number += 1
     post.comment_number = len(post.comments.all())
     # post.heart_number = 
     post.save()
