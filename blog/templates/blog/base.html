@@ -1,0 +1,66 @@
+    {% load staticfiles %}
+    <html>
+        <head>
+            <title>CVPy</title>
+            <script src="http://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"></script>
+            <link rel="stylesheet" href="{% static 'Semantic-UI-CSS/semantic.min.css' %}">
+            <script src="{% static 'Semantic-UI-CSS/semantic.min.js' %}"></script>
+            <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+            <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+        </head>
+        
+        <body>  
+            <div class="ui inverted segment">
+                <div class="ui inverted secondary menu">
+            <!--    
+                    <div class="page-header">
+                        {% if user.is_authenticated %}               
+                        {% endif %}                          
+                    </div>
+            -->     
+                    <div class="logo">
+                        <a href="/">
+                            <img class="ui logo" src="{% static 'images/cvpy-green-logo.png' %}">
+                        </a>
+                    </div>  
+            <!--        
+                    <div class="name-label">
+                        <a href="/" class="ui label" style="margin-top:0px;">
+                            <h1>BingBuyu</h1> 
+                        </a>
+                    </div>
+            -->        
+                    <div class="menu">
+                        <a class="active item" href="/">
+                            Home
+                        </a>
+                        <a class="item">
+                            Messages
+                        </a>
+                        <a class="item">
+                            Friends
+                        </a>  
+                    </div>                        
+                </div>
+            </div>           
+            
+            <div class="ui one column doubling stackable grid container">
+                <div class="column">
+            <div class="content container">
+                <div class="row">
+                    <div class="col-md-8">
+                    {% block content %}
+                    {% endblock %}
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="column">
+                    <p></p>
+                    <p></p>
+                </div>
+            </div>
+            
+
+        </body>
+    </html>

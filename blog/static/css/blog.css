@@ -1,0 +1,85 @@
+    h1 a {
+        color: #FCA206;
+    }
+    
+    body {
+        padding-left: 0px;
+        /*background-color: #CCC;*/
+    }
+    
+    h1 a {
+        color: #FCA205;
+        font-family: 'Open Sans', 'Helvetica Neue';
+    }
+    
+    .page-header {
+        /*background-color: #3B83C0;*/
+        padding: 0px 10px 0px 0px;
+    }
+  
+    .content {
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+    
+
+    h1, h2, h3, h4 {
+        font-family: 'Open Sans', 'Helvetica Neue';
+    }
+
+    .save {
+        float: right;
+    }
+
+    .post-form textarea, .post-form input {
+        width: 100%;
+    }
+
+    .top-menu, .top-menu:hover, .top-menu:visited {
+        color: #ffffff;
+        float: right;
+        font-size: 26pt;
+        margin-right: 20px;
+    }
+
+    
+    .share-to {
+        float: right;
+        margin-top:10px;
+        margin-bottom:10px;
+        /*padding:10px,10px,0px,10px;*/
+        vertical-align:middle;
+    }
+    
+    .likes {
+        float: left;
+        margin-top:10px;
+        margin-bottom:10px;
+        /*padding:10px,10px,0px,0px;*/
+        vertical-align:middle;
+    }
+    
+    
+    
+    .post {
+        margin-bottom: 10px;
+    }
+
+    .post h1 a, .post h1 a:visited {
+        color: #000000;
+    }
+    
+    
+    .logo {
+        margin-left:10px;
+        margin-right:10px;
+    }
+    
+    .name-label {
+        margin-left:30px;
+    }
+    
+    .menu a {
+        margin-left:0px;
+       
+    }

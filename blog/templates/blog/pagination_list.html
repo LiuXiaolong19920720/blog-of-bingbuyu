@@ -1,0 +1,25 @@
+<html>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page.has_previous %}
+                <a href="?page={{ page.previous_page_number }}">              
+                    <button class="ui teal left floated labeled icon button">
+                        <i class="left arrow icon"></i>
+                            上一页
+                    </button>
+                </a>
+            {% endif %}     
+            
+            <!--    Page {{ page.number }} of {{ page.paginator.num_pages }}. -->
+
+            {% if page.has_next %}
+                <a href="?page={{ page.next_page_number }}">            
+                    <button class="ui teal right floated right labeled icon button">
+                        <i class="right arrow icon"></i>
+                            下一页
+                    </button>
+                </a>
+            {% endif %}
+        </span>
+    </div>
+</html>
