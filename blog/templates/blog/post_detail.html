@@ -23,6 +23,16 @@
             });
         });
         
+        $('.delete-post').click(function() {
+            var id;
+            id = $(this).attr('data-post-id2');
+            $.get('/delete-blog/', {
+                post_id: id
+            }, function(data) {
+                $('.delete_post').html(data);
+            });
+        });
+        
         $('.ui.sticky')
             .sticky({
                 context: '#img',
@@ -35,8 +45,8 @@
 <div class="ui container stackable grid">
     <div class="twelve wide column">   
         <div class="ui raised very padded container segment">
-            <div class="post">  
-                <div class="ui header" style="margin-top:0px;">
+            <div class="post" style="margin-top:10px;">  
+                <div class="ui header">
                     <a href="{% url 'post_detail' pk=post.pk %}">
                         <h2>{{ post.title }}</h2>
                     </a>
@@ -45,7 +55,7 @@
                 {% if post.published_date %}                    
                     <div class="date-author" style="float:left;">
                         <div class="ui Teal label">时间
-                            <div class="detail">{{ post.published_date|date:"Y-m-d"}}</div>
+                            <div class="detail">{{ post.published_date|date:"Y-m-d H:m"}}</div>
                         </div>
                         
                         <div class="ui Teal label">作者
@@ -74,17 +84,33 @@
                       
                         {% if user.is_authenticated %}                                      
                             <a href ="{% url 'post_edit' pk=post.pk %}">
-                                <button class="small teal ui icon right floated label">
-                                <i class="write icon"></i>
+                                <label class="mini teal ui icon label">                                
+                                    <i class="write icon"></i>编辑
+                                </label>
                             </a>
+                        <!--    
+                            <a>
+                            <div class="delete-post">
+                                <label class="mini teal ui icon label" data-post-id2="{{ post.id }}">                                
+                                    <i class="delete icon"></i>删除
+                                    <i class="delete_blog" id="heart-counter"></i>
+                                </label>
+                            </div>
+                            </a>
+                        -->    
                         {% else %}                        
                         {% endif %}
+                        
                     </div>                             
                 {% endif %}
                 <br/>
                 <div class="ui clearing divider"></div>
                 <br /> 
-                <p>{{ post.text|linebreaksbr }}</p>            
+                {% autoescape off %}
+                {{post.content_html}}
+                {% endautoescape %}
+
+                            
                 <br />
             
                 <div class="likes">

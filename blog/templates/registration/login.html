@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% load semanticui %}
+
+{% block content %}
+
+<div class="post-edit" style="align:center;">
+    <div class="ui raised very padded segment" style="margin:0 auto; margin-top:60px;width:50%;">
+        <div class="big ui fluid teal label" style="text-align:center;">
+            <h3 style="color:black;">登录界面</h3>
+        </div>
+        <br/>
+        <br/>
+        <form class="ui form" method="post">
+            {% csrf_token %}
+            {{ form|semanticui }}
+            <br/>
+            <button class="ui fluid teal button" type="submit"><h4 style="color:black;">登录</h4></button>
+      </form>
+    </div>
+</div>
+{% endblock %}

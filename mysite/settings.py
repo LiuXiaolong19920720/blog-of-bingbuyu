@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -127,3 +126,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'blog/media')
 CKEDITOR_UPLOAD_PATH = 'upload/'
 
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+LOGIN_REDIRECT_URL = '/'

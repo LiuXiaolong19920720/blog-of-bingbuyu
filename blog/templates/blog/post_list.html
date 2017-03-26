@@ -13,15 +13,19 @@
         <div class="ui raised very padded container segment">
             <div class="post">  
                 {% for post in posts %}
-                    <h2><a href="{% url 'post_detail' pk=post.pk %}">
+                    <h2 style="margin-top:0px;"><a href="{% url 'post_detail' pk=post.pk %}">
                             {{ post.title }}</a></h2>
                                       
-                    <br />
+                    {% autoescape off %}
+                    {{post.content_html|truncatechars_html:500}}
+                    {% endautoescape %}
+                    <br/>
+                <!--    
                     <p>{{ post.text|truncatechars_html:140|linebreaksbr }}</p>
-        
+                -->
                     <div class="date-author" style="float:left;margin-bottom:10px;">
                         <div class="ui Teal label">时间
-                            <div class="detail">{{ post.published_date|date:"Y-m-d"}}</div>
+                            <div class="detail">{{ post.published_date|date:"Y-m-d H:m"}}</div>
                         </div>
                             
                         <div class="ui Teal label">作者

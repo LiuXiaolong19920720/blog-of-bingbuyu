@@ -9,8 +9,9 @@ class Tag(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField('标题',max_length=200)
+    title = models.CharField('标题',max_length=100)
     text = models.TextField('正文')
+    content_html = models.TextField('正文-html',default='')
     created_date = models.DateTimeField(
             default=timezone.now)
     published_date = models.DateTimeField(
@@ -41,5 +42,9 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+    
+    
+    
+
     
 

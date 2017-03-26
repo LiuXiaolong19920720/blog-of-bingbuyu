@@ -1,5 +1,5 @@
 <html>
-    <div class="pagination">
+    <div class="pagination" style="text-align:center;">
         <span class="step-links">
             {% if page.has_previous %}
                 <a href="?page={{ page.previous_page_number }}">              
@@ -10,6 +10,22 @@
                 </a>
             {% endif %}     
             
+            <div class="ui large teal label" style="margin:0 auto; margin-top:5px;">
+            {{ page.number  }} / {{ page.paginator.num_pages  }}
+            </div>
+    <!--        
+            {% for p in page.paginator.page_range %}
+                {% ifequal p page.number %}
+                <div class="ui teal label">
+                    <a class="active">{{p}}</a>
+                </div>
+                {% else %}
+                <div class="ui teal label">
+                    <a href="?page={{p}}">{{p}}</a>
+                </div>
+                {% endifequal %}
+            {% endfor %}
+    -->        
             <!--    Page {{ page.number }} of {{ page.paginator.num_pages }}. -->
 
             {% if page.has_next %}

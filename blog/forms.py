@@ -1,7 +1,9 @@
 from django import forms
-
 from .models import Post,Comment
 
+class PostFormNew(forms.Form):
+    title = forms.CharField(max_length=100)
+    text = forms.CharField(required=False,widget=forms.Textarea)
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -17,3 +19,5 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('name', 'email','content')
+        
+        

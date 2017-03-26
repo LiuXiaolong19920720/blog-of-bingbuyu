@@ -3,12 +3,12 @@ from django.http import HttpResponse,HttpResponseRedirect
 from .templates import blog
 from .models import Post,Comment
 from django.utils import timezone
-from .forms import PostForm,EmailPostForm
+from .forms import PostFormNew,EmailPostForm,PostForm
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from django.http import Http404
 from .forms import CommentForm
 from django.views.decorators.csrf import csrf_exempt   
-
+from markdown import markdown  
 
 def post_share(request,post_id):
     # Retrieve post by id
@@ -27,7 +27,7 @@ def post_share(request,post_id):
  
 def post_list(request):
     object_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    paginator = Paginator(object_list, 3) # 3 posts in each page
+    paginator = Paginator(object_list, 4) # 4 posts in each page
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -102,27 +102,85 @@ def post_detail(request, pk):
     
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostFormNew(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
+            cd = form.cleaned_data
+            title = cd['title']
+            text = cd['text']
+            content_html = markdown(cd['text'])
+            published_date = timezone.now()
+            post = Post()
+            post.title = title
             post.author = request.user
-            post.published_date = timezone.now()
+            post.text = text
+            post.content_html = content_html
+            post.published_date = published_date
             post.save()
-            return redirect('post_detail', pk=post.pk)
+            
+            form = CommentForm()
+            
+            object_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+            paginator = Paginator(object_list, 1) # 1 posts in each page
+            page = request.GET.get('page')
+            try:
+                posts = paginator.page(page)
+            except PageNotAnInteger:
+            # If page is not an integer deliver the first page
+                posts = paginator.page(1)
+            except EmptyPage:
+            # If page is out of range deliver last page of results
+                posts = paginator.page(paginator.num_pages)
+                
+            post_id = post.pk
+            liked = False
+            if request.session.get('has_liked_'+str(post_id), liked):
+                liked = True
+                #print("liked {}_{}".format(liked, post_id))
+            ctx = {
+                'post': post,
+                'comments': post.comments.all().order_by('-created'),
+                'form': form,
+                'page':page,
+                'posts':posts,
+                'liked': liked
+                }        
+            return render(request, 'blog/post_detail.html', ctx)
+            
+            #return redirect('post_detail', pk=post.pk)
     else:
-        form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+        form = PostFormNew()
+    return render(request, 'blog/post_new.html', {'form': form})
 
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
-            post = form.save(commit=False)
+            print('form is valid')
+            print(form.cleaned_data)
+            cd = form.cleaned_data
+            title = cd['title']
+            text = cd['text']
+            #author = cd['author']
+            content_html = markdown(cd['text'])
+            published_date = timezone.now()
+            ''' 这种方式会创建一篇新的文章
+                而不是覆盖修改前的原文
+            post = Post(
+                title = title,
+                author = request.user,
+                text = text,
+                content_html = content_html,
+                published_date = published_date)
+                下面的方式才会修改原文 '''
+                
+            post.title = title
             post.author = request.user
-            post.published_date = timezone.now()
+            post.text = text
+            post.content_html = content_html
+            post.published_date = published_date
             post.save()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('post_detail', pk)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})    
@@ -147,3 +205,16 @@ def like_count_blog(request):
     post.likes = likes
     post.save()
     return HttpResponse(likes, liked)
+    
+def delete_blog(request,pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return HttpResponse('/')
+    '''
+    if request.method == 'GET':
+        post_id = request.GET['post_id2']
+        post = Post.objects.get(id=int(post_id))
+        post.delete()
+        return redirect('post_list')
+    '''
+    
