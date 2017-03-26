@@ -45,7 +45,7 @@ def post_detail(request, pk):
     
     # Last page and next page
     object_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    paginator = Paginator(object_list, 1) # 3 posts in each page
+    paginator = Paginator(object_list,1) # 3 posts in each page
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -149,7 +149,7 @@ def post_new(request):
             #return redirect('post_detail', pk=post.pk)
     else:
         form = PostFormNew()
-    return render(request, 'blog/post_new.html', {'form': form})
+    return render(request, 'blog/post_edit.html', {'form': form})
 
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -209,7 +209,7 @@ def like_count_blog(request):
 def delete_blog(request,pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
-    return HttpResponse('/')
+    return redirect('post_list')
     '''
     if request.method == 'GET':
         post_id = request.GET['post_id2']
