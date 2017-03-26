@@ -45,18 +45,30 @@
                     <div class="menu" style="margin-left:80px;">
                         <a class="active item" href="/">
                             <h4>首页</h4>
-                        </a>                       
-  
-                        <a class="teal item" style="margin-left:60px;">
+                        </a>
+                        
+                        <a class="teal item" style="margin-left:30px;">
+                            <h4>Python</h4>
+                        </a> 
+                        
+                        <a class="teal item" style="margin-left:30px;">
+                            <h4>OpenCV</h4>
+                        </a>
+                        
+                        <a class="teal item" style="margin-left:30px;">
+                            <h4>机器学习</h4>
+                        </a>                         
+                        
+                        <a class="teal item" style="margin-left:30px;">
                             <h4>关于我</h4>
                         </a> 
-                                              
+                    <!--                          
                         {% if user.is_authenticated %}                                         
                             <a class="teal item" style="margin-left:60px;">
                                 <h4>Messages</h4>
                             </a>
                         {% endif %}                         
-
+                    -->
                         <a class="teal item" style="margin-right:0px;">
                             <div class="ui action input">
                                 <input type="text" placeholder="Search...">
@@ -66,7 +78,7 @@
                         
                         {% if user.is_authenticated %} 
                             <a href="{% url 'post_new' %}">                           
-                                <div class="tiny ui teal right labeled icon button" style="margin-top:7px;margin-left:60px;">
+                                <div class="tiny ui teal left labeled icon button" style="margin-top:7px;margin-left:40px;">
                                     <i class="write icon"></i>
                                         写新文章
                                 </div>
