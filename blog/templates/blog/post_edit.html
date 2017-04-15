@@ -3,10 +3,9 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/xcatliu/simplemde-theme-base/master/dist/simplemde-theme-base.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-<script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
+
 
 <div class="post-edit" style="align:center;">
     <div class="ui raised very padded segment" style="margin:0 auto; width:80%;">
@@ -29,7 +28,18 @@
 </div>
 
 <script>
-var simplemde = new SimpleMDE();
+
+//var simplemde = new SimpleMDE();
+
+// Most options demonstrate the non-default behavior
+// Customize only the order of existing buttons
+var simplemde = new SimpleMDE({
+    renderingConfig: {
+
+		codeSyntaxHighlighting: true,
+	},
+});
+
 </script>
 
 {% endblock %}

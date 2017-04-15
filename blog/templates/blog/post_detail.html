@@ -1,5 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load semanticui %}
+{% load custom_markdown %}
 {% block content %}
 
 <style>
@@ -44,6 +45,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+            {% block title %}
+            <title>{{ post.title }}</title>
+            {% endblock %} 
 
 
 <div class="ui container stackable grid">
@@ -117,14 +122,14 @@
                 <div class="ui clearing divider"></div>
                 <br /> 
                 {% autoescape off %}
-                {{post.content_html}}
+                {{post.text|custom_markdown}}
                 {% endautoescape %}
 
                             
                 <br />
             
                 <div class="likes">
-                    <button class="tiny ui teal button post-likes" id="heart-icon" data-post-id="{{ post.id }}">
+                    <button class="small ui teal button post-likes" id="heart-icon" data-post-id="{{ post.id }}">
                         <i class="red like icon" id="heart-icon"></i>
                         <i class="like_count_blog" id="heart-counter">{{ post.likes }}</i>
                         {% if liked %}               
@@ -151,15 +156,17 @@
                         <i class="qq icon"></i>
                     </button>                  
                 </div> 
-            -->    
-               <div class="social-share" data-initialized="true" style="float:right;">
-                    <a class="ui blue icon label">
-                        分享到<i class="right arrow icon"></i> 
-                    </a>
+            --> 
+            <div  style="float:right;">
+                <i class="big teal share square icon">                                               
+                </i>            
+                <i class="social-share" data-initialized="true">
                     <a href="#" class="social-share-icon icon-wechat"></a>                    
                     <a href="#" class="social-share-icon icon-weibo"></a>           
                     <a href="#" class="social-share-icon icon-qq"></a>
-               </div>
+                    <a href="#" class="social-share-icon icon-qzone"></a>
+                </i>
+            </div>
                <!--
                     <a href="#" class="social-share-icon icon-weibo"></a>
                     <a href="#" class="social-share-icon icon-qq"></a>

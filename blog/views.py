@@ -8,7 +8,14 @@ from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from django.http import Http404
 from .forms import CommentForm
 from django.views.decorators.csrf import csrf_exempt   
-from markdown import markdown  
+#from markdown import markdown
+
+import markdown2
+
+#from django import template
+#from django.template.defaultfilters import stringfilter
+from django.utils.encoding import force_text
+from django.utils.safestring import mark_safe  
 
 def post_share(request,post_id):
     # Retrieve post by id
@@ -107,13 +114,13 @@ def post_new(request):
             cd = form.cleaned_data
             title = cd['title']
             text = cd['text']
-            content_html = markdown(cd['text'])
+            #content_html = mark_safe(markdown2.markdown(force_text(text),extras=["fenced-code-blocks", "cuddled-lists", "metadata", "tables", "spoiler"]))
             published_date = timezone.now()
             post = Post()
             post.title = title
             post.author = request.user
             post.text = text
-            post.content_html = content_html
+            #post.content_html = content_html
             post.published_date = published_date
             post.save()
             
@@ -162,7 +169,7 @@ def post_edit(request, pk):
             title = cd['title']
             text = cd['text']
             #author = cd['author']
-            content_html = markdown(cd['text'])
+            #content_html = mark_safe(markdown2.markdown(force_text(text),extras=["fenced-code-blocks", "cuddled-lists", "metadata", "tables", "spoiler"]))
             published_date = timezone.now()
             ''' 这种方式会创建一篇新的文章
                 而不是覆盖修改前的原文
@@ -177,7 +184,7 @@ def post_edit(request, pk):
             post.title = title
             post.author = request.user
             post.text = text
-            post.content_html = content_html
+            #post.content_html = content_html
             post.published_date = published_date
             post.save()
             return redirect('post_detail', pk)
