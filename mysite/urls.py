@@ -17,7 +17,6 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from blog import urls
 from django.contrib.auth import views as auth_views
-from stackedit import stack_urls
 
 urlpatterns = [
 
@@ -26,5 +25,4 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'', include(urls)),
-    url(r'^editor/', include(stack_urls))
 ]
