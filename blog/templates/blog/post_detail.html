@@ -120,7 +120,7 @@
                 {% endif %}
                 <br/>
                 <div class="ui clearing divider"></div>
-                <br /> 
+
                 {% autoescape off %}
                 {{post.text|custom_markdown}}
                 {% endautoescape %}
@@ -128,7 +128,7 @@
                             
                 <br />
             
-                <div class="likes">
+                <div class="likes" style="margin-bottom:10px;">
                     <button class="small ui teal button post-likes" id="heart-icon" data-post-id="{{ post.id }}">
                         <i class="red like icon" id="heart-icon"></i>
                         <i class="like_count_blog" id="heart-counter">{{ post.likes }}</i>
@@ -157,7 +157,7 @@
                     </button>                  
                 </div> 
             --> 
-            <div  style="float:right;">
+            <div  style="float:right;margin-top:10px;">
                 <i class="big teal share square icon">                                               
                 </i>            
                 <i class="social-share" data-initialized="true">

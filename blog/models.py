@@ -2,7 +2,12 @@ from django.db import models
 from django.utils import timezone
 
 class Category(models.Model):
-    name = models.CharField(max_length=16)
+    CATEGOTY_CHOICES = (
+    ('cv','opencv'),
+    ('nn','neural network'),
+    )
+    
+    name = models.CharField(max_length=16,choices=CATEGOTY_CHOICES,default='cv')
 
 class Tag(models.Model):
     name = models.CharField(max_length=16)

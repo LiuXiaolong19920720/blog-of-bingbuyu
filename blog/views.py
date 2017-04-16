@@ -3,20 +3,21 @@ from django.http import HttpResponse,HttpResponseRedirect
 from .templates import blog
 from .models import Post,Comment
 from django.utils import timezone
-from .forms import PostFormNew,EmailPostForm,PostForm
+from .forms import PostFormNew,PostForm
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
-from django.http import Http404
+#from django.http import Http404
 from .forms import CommentForm
-from django.views.decorators.csrf import csrf_exempt   
+#from django.views.decorators.csrf import csrf_exempt   
 #from markdown import markdown
 
-import markdown2
+#import markdown2
 
 #from django import template
 #from django.template.defaultfilters import stringfilter
-from django.utils.encoding import force_text
-from django.utils.safestring import mark_safe  
+#from django.utils.encoding import force_text
+#from django.utils.safestring import mark_safe  
 
+'''
 def post_share(request,post_id):
     # Retrieve post by id
     post = get_object_or_404(Post,id=post_id)
@@ -31,7 +32,8 @@ def post_share(request,post_id):
     else:
         form = EmailPostForm()
     return render(request,'blog/post_share.html',{'post':post,'form':form})   
- 
+'''
+
 def post_list(request):
     object_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     paginator = Paginator(object_list, 4) # 4 posts in each page
@@ -225,3 +227,44 @@ def delete_blog(request,pk):
         return redirect('post_list')
     '''
     
+def opencv(request):
+    object_list = Post.objects.filter(title__contains="opencv")
+    paginator = Paginator(object_list, 4) # 4 posts in each page
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'blog/post_list.html', {'page':page,'posts':posts})   
+    
+def nn(request):
+    object_list = Post.objects.filter(title__contains="神经网络")
+    paginator = Paginator(object_list, 4) # 4 posts in each page
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'blog/post_list.html', {'page':page,'posts':posts})  
+    
+def me(request):
+    object_list = Post.objects.filter(title__contains="关于我")
+    paginator = Paginator(object_list, 4) # 4 posts in each page
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'blog/post_list.html', {'page':page,'posts':posts}) 
